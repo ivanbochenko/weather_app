@@ -9,7 +9,8 @@ def index(request):
 
     if request.method == 'POST':
         form = CityForm(request.POST)
-        form.save()
+        if form.is_valid():
+            form.save()
 
     form = CityForm()
 
@@ -19,6 +20,7 @@ def index(request):
 
     for city in cities:
         try:
+            form_validation = True
             r = requests.get(url.format(city)).json()
 
             city_weather = {
@@ -29,9 +31,9 @@ def index(request):
             }
             weather_data.append(city_weather)
         except KeyError:
-            print('Not a valid name!')
+            form_validation = False
 
-    context = {'weather_data': weather_data, 'form': form}
+    context = {'weather_data': weather_data, 'form': form, 'form_validation': form_validation}
     return render(request, 'weather/weather.html', context)
 
 

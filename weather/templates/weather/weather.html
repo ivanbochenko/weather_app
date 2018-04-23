@@ -23,19 +23,38 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-offset-4 is-4">
-                    <form method="POST">
-                      {% csrf_token %}
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                {{ form.name }}
+                    {% if form_validation %}
+                        <form method="POST">
+                          {% csrf_token %}
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    {{ form.name }}
+                                </div>
+                                <div class="control">
+                                    <button type="submit" class="button is-info">
+                                        Add City
+                                    </button>
+                                </div>
                             </div>
-                            <div class="control">
-                                <button type="submit" class="button is-info">
-                                    Add City
-                                </button>
+                        </form>
+                    {% else %}
+                        <form method="POST">
+                          {% csrf_token %}
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    {{ form.name }}
+                                </div>
+                                <div class="control">
+                                    <button type="submit" class="button is-info">
+                                        Add City
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div>
+                              <p class="help is-danger">This city is invalid</p>
+                            </div>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
